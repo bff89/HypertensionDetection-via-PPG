@@ -1,0 +1,49 @@
+flowchart TD
+    %% Subgraph for main components
+    subgraph SYSTEM [System Architecture]
+        style SYSTEM stroke:#000,stroke-width:2px
+        A[Optical Heart Sensor] -->|PPG data capture| B[Signal Processing]
+        B -->|Filtering, artifact removal, waveform extraction| C[Machine Learning Algorithm & Inference Layer]
+        C -->|Detects consistent signs of hypertension| D[Notification, App Integration, & Provider Engagement]
+
+
+        %% Components style
+        style A stroke:#000,stroke-width:2px
+        style B stroke:#000,stroke-width:2px
+        style C stroke:#000,stroke-width:2px
+        style D stroke:#000,stroke-width:2px
+    end
+            D -->|AHA-aligned notification, secure sharing, provider follow-up| E
+    E[User & Clinician Action]
+            style E stroke:#000,stroke-width:2px
+
+
+    %% Auxiliary notes (blue outline)
+    style N1 stroke:#00f,stroke-width:2px
+    style N2 stroke:#00f,stroke-width:2px
+    C -.-o N1[Note: Trained on >100k participants, validated on 2k+ users]
+    C -.-o N2[Note: 30-day trend confirmation before notification]
+
+    %% Requirements (green outline)
+    style R1 stroke:#0a0,stroke-width:2px
+    style R2 stroke:#0a0,stroke-width:2px
+    style R3 stroke:#0a0,stroke-width:2px
+    style R4 stroke:#0a0,stroke-width:2px
+    style R5 stroke:#0a0,stroke-width:2px
+    style R6 stroke:#0a0,stroke-width:2px
+    R1[Requirement: <1% daily battery impact] -.-> SYSTEM
+    R2[Requirement: Sensitivity/Specificity] -.-> C
+    R3[Requirement: Align with AHA hypertension guidelines] -.-> D
+    R4[Requirement: HIPAA-equivalent privacy & secure storage] -.-> D
+    R5["Requirement: Limit claims (not diagnostic; exclude <22 yrs, pregnancy, known hypertension)"] -.-> D
+    R6[Requirement: Transparency — show trends & rationale] -.-> D
+
+    %% Risks (red outline)
+    style X1 stroke:#f00,stroke-width:2px
+    style X2 stroke:#f00,stroke-width:2px
+    style X3 stroke:#f00,stroke-width:2px
+    style X5 stroke:#f00,stroke-width:2px
+    X1[Risk: False Positives → Mitigation: Require 30-day confirmation, training/education, diverse & representative cohort] -.-> C
+    X2[Risk: False Negatives → Mitigation: diverse & representative cohort, training/education] -.-> C
+    X3[Risk: Battery Drain → Mitigation: Optimize sampling & inference scheduling] -.-> A
+    X5[Risk: User Misinterpretation → Mitigation: training/education, visuals, Framed as notification, not diagnosis] -.-> D
