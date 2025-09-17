@@ -1,11 +1,12 @@
 flowchart TD
     %% Subgraph for main components
-    subgraph SYSTEM [System Architecture]
+    A[Optical Heart Sensor]
+    A -->|PPG data capture| B[Signal Processing]
+    subgraph SYSTEM [**Hypertension App**]
         style SYSTEM stroke:#000,stroke-width:2px
-        A[Optical Heart Sensor] -->|PPG data capture| B[Signal Processing]
+
         B -->|Filtering, artifact removal, waveform extraction| C[Machine Learning Algorithm & Inference Layer]
         C -->|Detects consistent signs of hypertension| D[Notification, App Integration, & Provider Engagement]
-
 
         %% Components style
         style A stroke:#000,stroke-width:2px
@@ -13,10 +14,9 @@ flowchart TD
         style C stroke:#000,stroke-width:2px
         style D stroke:#000,stroke-width:2px
     end
-            D -->|AHA-aligned notification, secure sharing, provider follow-up| E
+    D -->|AHA-aligned notification, secure sharing, provider follow-up| E
     E[User & Clinician Action]
-            style E stroke:#000,stroke-width:2px
-
+    style E stroke:#000,stroke-width:2px
 
     %% Auxiliary notes (blue outline)
     style N1 stroke:#00f,stroke-width:2px
@@ -31,12 +31,14 @@ flowchart TD
     style R4 stroke:#0a0,stroke-width:2px
     style R5 stroke:#0a0,stroke-width:2px
     style R6 stroke:#0a0,stroke-width:2px
-    R1[Requirement: <1% daily battery impact] -.-> SYSTEM
-    R2[Requirement: Sensitivity/Specificity] -.-> C
+    R1[Requirement: <1% daily battery impact] -.-> X3
+    R2[Requirement: Sensitivity/Specificity] -.-> X1
+    R2 -.-> X2
     R3[Requirement: Align with AHA hypertension guidelines] -.-> D
-    R4[Requirement: HIPAA-equivalent privacy & secure storage] -.-> D
-    R5["Requirement: Limit claims (not diagnostic; exclude <22 yrs, pregnancy, known hypertension)"] -.-> D
-    R6[Requirement: Transparency — show trends & rationale] -.-> D
+    R4[Requirement: HIPAA-equivalent privacy & secure storage] -.-> SYSTEM
+    R5["Requirement: Limit claims (not diagnostic; exclude <22 yrs, pregnancy, known hypertension)"] -.-> X1
+    R5 -.-> X2
+    R6[Requirement: Transparency — show trends & rationale] -.-> X5
 
     %% Risks (red outline)
     style X1 stroke:#f00,stroke-width:2px
@@ -45,5 +47,41 @@ flowchart TD
     style X5 stroke:#f00,stroke-width:2px
     X1[Risk: False Positives → Mitigation: Require 30-day confirmation, training/education, diverse & representative cohort] -.-> C
     X2[Risk: False Negatives → Mitigation: diverse & representative cohort, training/education] -.-> C
-    X3[Risk: Battery Drain → Mitigation: Optimize sampling & inference scheduling] -.-> A
+    X3[Risk: Battery Drain → Mitigation: Optimize sampling & inference scheduling] -.-> SYSTEM
     X5[Risk: User Misinterpretation → Mitigation: training/education, visuals, Framed as notification, not diagnosis] -.-> D
+
+    %%================= Styling Classes =================
+    %% Notes
+    classDef noteNode stroke:#00f,stroke-width:2px,fill:#fff,color:#000;
+    class N1,N2 noteNode;
+
+    %% Requirements
+    classDef reqNode stroke:#0a0,stroke-width:2px,fill:#fff,color:#000;
+    class R1,R2,R3,R4,R5,R6 reqNode;
+
+    %% Risks
+    classDef riskNode stroke:#f00,stroke-width:2px,fill:#fff,color:#000;
+    class X1,X2,X3,X5 riskNode;
+
+    %% Core components
+    classDef coreNode stroke:#000,stroke-width:2px,fill:#fff,color:#000;
+    class A,B,C,D,E coreNode;
+
+    %%================= Connector Coloring =================
+    %% Notes (blue connectors)
+    linkStyle 5 stroke:#00f,stroke-width:2px
+    linkStyle 6 stroke:#00f,stroke-width:2px
+
+    %% Requirements (green connectors)
+    linkStyle 7 stroke:#0a0,stroke-width:2px
+    linkStyle 8 stroke:#0a0,stroke-width:2px
+    linkStyle 9 stroke:#0a0,stroke-width:2px
+    linkStyle 10 stroke:#0a0,stroke-width:2px
+    linkStyle 11 stroke:#0a0,stroke-width:2px
+    linkStyle 12 stroke:#0a0,stroke-width:2px
+
+    %% Risks (red connectors)
+    linkStyle 13 stroke:#f00,stroke-width:2px
+    linkStyle 14 stroke:#f00,stroke-width:2px
+    linkStyle 15 stroke:#f00,stroke-width:2px
+    linkStyle 16 stroke:#f00,stroke-width:2px
